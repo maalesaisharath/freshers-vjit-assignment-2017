@@ -1,4 +1,3 @@
-Hello everyone.
 Ayodya Restaurant Welcomes You.
 Initially the customer walks in.
 Host will chwck weather the table of required capacity is available .
