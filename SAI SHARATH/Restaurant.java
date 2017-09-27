@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +7,7 @@ import java.util.List;
 
 public class Restaurant {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		/*List<Customer> customers=new ArrayList<Customer>();
 		
 
@@ -23,38 +24,55 @@ public class Restaurant {
 		
 		
 	
-		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(System.in));
 		Host host=new Host();
 		/*Manager manager=new Manager();
-		List<Item> OrderItems=new ArrayList<Item>();
+		
 		Order order=new Order();
 		ExecutiveChef chef=new ExecutiveChef();*/
 		
 		int itemId;
+		int numberOfItems;
+		int quantity;
+		
+		//allocating table for customer
+		System.out.println("Customer enters into the Restaurant");
 		if(host.getAllocationStatus()==true)
 		{
 			BusBoy busBoy=new BusBoy();
 			busBoy.getWater();
+			Manager manager=new Manager();
+			System.out.println("Manager brings the menu");
 			manager.getMenu();
 			System.out.println("Enter number of Items:");
-			int numberOfItems=Integer.parseInt(br.readLine());
+			numberOfItems=Integer.parseInt(bufferedReader.readLine());
+			List<Item> OrderItems=new ArrayList<Item>();
 			for(int i=0;i<numberOfItems;i++)
 			{
-			System.out.println("Enter number of Items:");
-			itemId=Integer.parseInt(br.readLine());	
-			OrderItems.add(manager.getItem(itemId)))
+			System.out.println("Enter the Item Id:");
+			itemId=Integer.parseInt(bufferedReader.readLine());	
+			System.out.println("Enter the quantity:");
+			quantity=Integer.parseInt(bufferedReader.readLine());	
+			OrderItems.add(new Item(itemId,quantity));
 			}
-			order.addOrder(OrderItems);	
+			Order order=new Order(1,OrderItems);
+			manager.placeOrder(order);
+			Server server=new Server();
+			server.serveFood();
+			Bill bill=new Bill(order,manager.getMainCourseMenu(),manager.getDesertMenu(),manager.getStartereMenu());
+			bill.getBill();
 			
-			chef.getOrder(manager.placeOrder(order));
-			chef.placeOrderToLineCooks();
-			manager.getBill(OrderItems);
 			
-					
+			System.out.println("Enter the Feedback \n Provide your comments");
+			Feedback feedBack = new Feedback();
+			String comments = bufferedReader.readLine();
+			feedBack.feedBackForm(comments);
+			System.out.println("Thank you for providing feedback");
+			
+			//calling busBoy for cleaning the table
+			busBoy.tableCleaning();
 		}
 	}
-		
-
-	}
+	
 
 }
